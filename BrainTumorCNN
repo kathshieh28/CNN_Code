@@ -23,7 +23,7 @@ def load_image_data(folder_path):
     datagen = ImageDataGenerator(rescale=1./255)
     data_generator = datagen.flow_from_directory(
         folder_path,
-        target_size=(128, 128),  # Adjust the target size based on your requirements
+        target_size=(128, 128, 3),  # Adjust the target size based on your requirements
         batch_size=32,
         class_mode='input',
         shuffle=True
@@ -89,7 +89,7 @@ else:
     print("Autoencoder does not have a Dense layer as the second layer.")
 
 # Encoder architecture for the second autoencoder
-input_encoded = Input(shape=(120,))
+input_encoded = Input(shape=(128, 128, 3))
 encoded2 = Dense(40, activation='sigmoid', name='Encoder_2')(input_encoded)
 decoded2 = Dense(120, activation='sigmoid', name='Decoder_2')(encoded2)
 
@@ -128,7 +128,7 @@ else:
     print("Autoencoder does not have enough layers.")
 
 # Softmax layer
-input_softmax = Input(shape=(40,))
+input_softmax = Input(shape=(128, 128, 3))
 softmax_layer = Dense(10, activation='softmax', name='Softmax')(input_softmax)
 
 # Softmax model
